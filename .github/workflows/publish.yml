@@ -29,4 +29,4 @@ jobs:
       # The tarball is packed locally from the private source repo, so a
       # provenance attestation pointing at this repo would be misleading.
       - name: Publish to npm
-        run: npm publish dist/riff-build-*.tgz --no-provenance
+        run: npm publish ./dist/riff-build-*.tgz --no-provenance
