@@ -1,0 +1,32 @@
+# Publishes a riff-build tarball already attached to a GitHub Release here to
+# npm, using npm trusted publishing (OIDC): no npm token, no OTP prompt.
+# Dispatched by scripts/release.sh in the private knaig/riff repo after it
+# creates the release; can also be run by hand from the Actions tab.
+name: publish
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag whose tarball to publish (e.g. v0.3.1)"
+        required: true
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      # Trusted publishing needs npm >= 11.5.1; Node 22 bundles npm 10.
+      - run: npm install -g npm@latest
+      - name: Download release tarball
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download "${{ inputs.tag }}" --repo "$GITHUB_REPOSITORY" --pattern 'riff-build-*.tgz' --dir dist
+      # The tarball is packed locally from the private source repo, so a
+      # provenance attestation pointing at this repo would be misleading.
+      - name: Publish to npm
+        run: npm publish dist/riff-build-*.tgz --no-provenance
