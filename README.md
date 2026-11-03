@@ -1,19 +1,97 @@
-# riff — releases
+# riff - releases
 
-This repo exists only to host downloadable install packages for [riff](https://riff-site-chi.vercel.app). It has no source code — riff's source lives in a private repository.
+This repo hosts the downloadable install packages for [riff](https://riff-site-chi.vercel.app). It has no source code; the source is private. Each release is a packed npm tarball.
 
-## Install
+A team of AI characters that builds with you, on the record. Riff runs on your
+own computer, opens in your browser, and talks, listens and draws diagrams while
+you work. You bring one API key; your messages go to the model provider that
+key belongs to, and riff itself keeps everything else on your machine.
 
-Download the latest release tarball from the [Releases page](https://github.com/knaig/riff-releases/releases/latest), then:
+Free. Runs locally at `127.0.0.1`. Windows 10/11 and macOS, with Chrome, Edge
+or Safari 16.4+.
 
-```
-npm install -g riff-<version>.tgz
-riff config set openrouter <your-key>
-riff room
-```
+## Install on Windows
 
-Node 22+ required. `riff config set` also accepts `openai`, `deepseek`, `nvidia`, or `perplexity` — or skip it and open `riff room` → `/settings` in the browser. No key at all still works: the cast runs on a deterministic mock so you can see the room before spending anything.
+1. **Install Node 22 or newer.** Download the LTS installer from
+   [nodejs.org](https://nodejs.org) and accept the defaults. Then open
+   **PowerShell** from the Start menu and check:
 
-## What's in each release
+   ```powershell
+   node -v
+   ```
 
-A packed npm tarball (`npm pack` output) — the compiled-equivalent install package, not a git checkout. No commit history, no internal docs, no issues.
+   It should print `v22` or higher. If it does not, close PowerShell and open a
+   new window.
+
+2. **Install riff.** Paste this into PowerShell:
+
+   ```powershell
+   npm install -g https://github.com/knaig/riff-releases/releases/latest/download/riff-latest.tgz
+   ```
+
+   If PowerShell says `running scripts is disabled on this system`, run this
+   once, then repeat the install:
+
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+   ```
+
+3. **Open riff.**
+
+   ```powershell
+   riff launch
+   ```
+
+   Your browser opens a page that lists your projects, with Open and Stop
+   buttons. To open one project directly, use its full path:
+
+   ```powershell
+   riff start C:\Users\you\Projects\myapp
+   ```
+
+4. **Paste your key.** On first run the browser shows a settings page. Paste one
+   OpenRouter key from [openrouter.ai/keys](https://openrouter.ai/keys) and click
+   Save. Riff checks chat, listening and speaking, then shows "Open the room".
+   The one key covers all three. You can enter your own keys for any of them
+   under "Other providers and models".
+
+5. **When you are done:** `riff stop --all`.
+
+## Install on macOS
+
+1. Install Node 22 or newer from [nodejs.org](https://nodejs.org), then open
+   **Terminal** and check `node -v`.
+2. Install riff:
+
+   ```sh
+   npm install -g https://github.com/knaig/riff-releases/releases/latest/download/riff-latest.tgz
+   ```
+
+3. Run `riff launch`, or `riff start ~/Projects/myapp`.
+4. Paste your OpenRouter key on the settings page, as above.
+
+## What works
+
+| | Windows | macOS |
+|---|---|---|
+| Room, cast, typed chat, canvas and diagrams | yes | yes |
+| Voice in the browser (microphone and speaker) | yes | yes |
+| Hands-free call | not yet confirmed | needs `brew install livekit` |
+| Watching your screen or coding terminal | not yet | yes |
+
+Windows has not been through automated tests yet. If a step fails, copy the
+error text and send it to us.
+
+## Update
+
+Run the install command again. It always fetches the latest release.
+
+## Troubleshooting
+
+- **`riff` is not recognized:** close the terminal and open a new window so it
+  picks up the new PATH.
+- **`node` is not recognized:** repeat step 1, then open a new window.
+- **No key yet:** the room still runs on a built-in demo model, so you can look
+  around before spending anything.
+
+All releases: [github.com/knaig/riff-releases](https://github.com/knaig/riff-releases/releases).
