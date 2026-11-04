@@ -26,7 +26,7 @@ or Safari 16.4+.
 2. **Install riff.** Paste this into PowerShell:
 
    ```powershell
-   npm install -g https://github.com/knaig/riff-releases/releases/latest/download/riff-latest.tgz
+   npm install -g riff-build
    ```
 
    If PowerShell says `running scripts is disabled on this system`, run this
@@ -64,7 +64,7 @@ or Safari 16.4+.
 2. Install riff:
 
    ```sh
-   npm install -g https://github.com/knaig/riff-releases/releases/latest/download/riff-latest.tgz
+   npm install -g riff-build
    ```
 
 3. Run `riff launch`, or `riff start ~/Projects/myapp`.
@@ -84,7 +84,7 @@ error text and send it to us.
 
 ## Update
 
-Run the install command again. It always fetches the latest release.
+Run `npm install -g riff-build@latest`.
 
 ## Troubleshooting
 
